@@ -1,0 +1,7 @@
+git add -A
+git commit -m "mensaje"
+git push
+
+______
+# check the status of your project
+git status
