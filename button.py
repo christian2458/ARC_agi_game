@@ -20,7 +20,7 @@ class Button ():
 
         self.scaled_image_rbrillante = pygame.transform.scale(self.settings.button.get('bright_image'),(self.x_scale,self.y_scale))
 
-        self.display_x = self.settings.grid_surface.get('grid_start_x')
+        self.grid_start_x = self.settings.grid_surface.get('grid_start_x')
 
         self.display_y = self.settings.grid_surface.get('grid_start_y') + self.settings.grid_surface.get('hight') + self.settings.button.get('button_margin')
 
@@ -32,7 +32,7 @@ class Button ():
 
         self.display = pygame.display.get_surface() # devuelve la superfice que creamos 
 
-        self.display.blit(self.scaled_image_rojo,(self.display_x,self.display_y)) # dibuja la superfice con las coordenadas 
+        self.display.blit(self.scaled_image_rojo,(self.grid_start_x,self.display_y)) # dibuja la superfice con las coordenadas 
 
     def draw_bright_button (self):
 
@@ -40,18 +40,23 @@ class Button ():
 
         self.display = pygame.display.get_surface() # devuelve la superfice que creamos 
 
-        self.display.blit(self.scaled_image_rbrillante,(self.display_x,self.display_y))
+        self.display.blit(self.scaled_image_rbrillante,(self.grid_start_x,self.display_y))
 
     def button_event(self):
 
-
         pos = pygame.mouse.get_pos()
 
-        if self.x_scale + self.display_x > pos[0] > self.display_x and self.y_scale + self.display_y + self.y_margin > pos[1] > self.display_y + self.y_margin :
-        
+        if self.x_scale + self.grid_start_x > pos[0] > self.grid_start_x and self.y_scale + self.display_y + self.y_margin > pos[1] > self.display_y + self.y_margin :
+
             self.draw_bright_button()
 
         else:
          
             self.draw_button() 
+
+   
+
+
+
+            
   

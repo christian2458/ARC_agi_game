@@ -26,7 +26,9 @@ class Arc_game () :  # CLASS PRINCIPAL DEL JUEGO
     
     def check_events (self): # FUNCION PARA CHEQUEAR EVENTOS DE TECLADO O MOUSE
 
-        self.button.button_event()
+        #self.button.button_event()
+
+        #self.grid.grid_color_change()
     
         pygame.display.update()
 
