@@ -1,7 +1,5 @@
-import sys 
-
+import os
 import pygame
-
 from settings import Settings
 
 class Button ():
@@ -16,31 +14,37 @@ class Button ():
 
         self.y_margin = self.settings.button.get('button_margin')
 
-        self.scaled_image_rojo = pygame.transform.scale(self.settings.button.get('image'),(self.x_scale,self.y_scale))
-
-        self.scaled_image_rbrillante = pygame.transform.scale(self.settings.button.get('bright_image'),(self.x_scale,self.y_scale))
 
         self.grid_start_x = self.settings.grid_surface.get('grid_start_x')
 
-        self.display_y = self.settings.grid_surface.get('grid_start_y') + self.settings.grid_surface.get('hight') + self.settings.button.get('button_margin')
+        self.button_pos_y = self.settings.grid_surface.get('grid_start_y') + self.settings.grid_surface.get('hight') + self.settings.button.get('button_margin')
 
-        self.dis_x = self.settings.grid_surface.get('grid_start_x')
-        
-    def draw_button(self):
-        
-        self.rect = self.scaled_image_rojo.get_rect()   # Le creo un rectangulo para la imagen  escalada
+        self.button_pos_x = self.settings.grid_surface.get('grid_start_x')
 
         self.display = pygame.display.get_surface() # devuelve la superfice que creamos 
 
-        self.display.blit(self.scaled_image_rojo,(self.grid_start_x,self.display_y)) # dibuja la superfice con las coordenadas 
 
-    def draw_bright_button (self):
+    def load_image(self, image_path):
+        image = pygame.image.load(image_path).convert_alpha()
 
-        self.rect = self.scaled_image_rbrillante.get_rect()   # Le creo un rectangulo para la imagen  escalada
+        scaled_image = pygame.transform.scale(image, (self.x_scale,self.y_scale))
 
-        self.display = pygame.display.get_surface() # devuelve la superfice que creamos 
+        return scaled_image
+    
 
-        self.display.blit(self.scaled_image_rbrillante,(self.grid_start_x,self.display_y))
+    def draw_button(self, display, scaled_image, pos_x, pos_y):
+        
+        self.rect = scaled_image.get_rect()   # Le creo un rectangulo para la imagen  escalada
+
+        display.blit(scaled_image,(pos_x, pos_y)) # dibuja la superfice con las coordenadas 
+
+
+    def draw_bright_button (self, display, scaled_image, pos_x, pos_y):
+
+        self.rect = scaled_image.get_rect()   # Le creo un rectangulo para la imagen  escalada
+
+        display.blit(scaled_image,(pos_x, pos_y))
+
 
     def button_event(self):
 
@@ -52,7 +56,10 @@ class Button ():
 
         else:
          
-            self.draw_button() 
+            self.draw_button(display=self.display,
+                            scaled_image="",
+                            pos_x="",
+                            pos_y="") 
 
    
 

@@ -1,22 +1,20 @@
-import sys
-
+import os
 import pygame
-
 from settings import Settings
-
 from button import Button
+from pathlib import Path
 
 class Grid() :
 
     def __init__(self):
 
-        self.settings     = Settings()
+        self.settings = Settings()
 
-        self.button       = Button()
+        self.button = Button()
 
         self.color_number = 1
 
-        self.list_grid    = []  # EMPTY LIST WHERE WE WILL STORE AN ARRAY OF LISTS
+        self.list_grid = []  # EMPTY LIST WHERE WE WILL STORE AN ARRAY OF LISTS
 
     def render_box_colors(self, row, column):
         # RENDER all boxes WHITE
@@ -44,17 +42,19 @@ class Grid() :
                         self.settings.grid_surface.get('cell_width'),
                         self.settings.grid_surface.get('cell_hight')])
 
-    def draw_grid(self):
+    def draw_grid(self, button_images):
 
-        self.grid_surface_display = pygame.Surface((self.settings.grid_surface.get('width'),self.settings.grid_surface.get('hight')))
+        self.display = pygame.display.get_surface()
         
-        self.display              = pygame.display.get_surface()
+        self.grid_surface_display = pygame.Surface((self.settings.grid_surface.get('width'),self.settings.grid_surface.get('hight')))
 
         self.grid_surface_display.fill(self.settings.grid_surface.get('back_ground_color'))
 
-        click                      = pygame.mouse.get_pressed()
+        click = pygame.mouse.get_pressed()
+        # (False, True, False)
 
-        pos                        = pygame.mouse.get_pos()
+        pos = pygame.mouse.get_pos()
+        # (x, y) integers between 1280 and 720
         
         # Create a 2 dimensional array. A two dimensional array is simply a list of lists.
         for row in range(10):
@@ -63,30 +63,54 @@ class Grid() :
 
             for column in range(10):
 
-                self.list_grid[row].append(0)  # Append a cell
+                self.list_grid[row].append(0) # Append a cell
     
 
         for row in range(10): # Draw the grid
-              
+            
             for column in range(10):
-
                 self.render_box_colors(row, column)
 
                 self.display.blit(self.grid_surface_display, (self.settings.grid_surface.get('grid_start_x'), self.settings.grid_surface.get('grid_start_y')))
 
-        #change color for selecting boxes 
-        if self.button.x_scale + self.button.grid_start_x > pos[0] > self.button.grid_start_x and self.button.y_scale + self.button.display_y + self.button.y_margin > pos[1] > self.button.display_y + self.button.y_margin:
+        #change color for selecting boxes TODO: FOR LOOP to create extra buttons goes here
+        images_path = self.settings.button.get("images_path")
+        algo = 0
 
-            self.button.draw_bright_button()
+        for scaled_button_image in button_images:
+            # rojo_brillante.png
+            # rojo.png
+
+            button = Button()
+            algo += button.x_scale + 5
+            if button.x_scale + button.grid_start_x + algo > pos[0] > button.grid_start_x + algo and button.y_scale + button.button_pos_y + button.y_margin > pos[1] > button.button_pos_y + button.y_margin:
+                button_pos_x = algo + button.grid_start_x
+                button_pos_y = button.button_pos_y
+                button.draw_bright_button(display=self.display,
+                                            scaled_image=scaled_button_image, 
+                                            pos_x=button_pos_x, 
+                                            pos_y=button_pos_y)
+
+            else:
+                pass
+
 
             if click[0] == True:
+                button_pos_x = algo + button.grid_start_x
+                button_pos_y = button.button_pos_y
+                self.color = self.settings.button_color.get("red")
+                self.button.draw_button(display=self.display,
+                                        scaled_image=scaled_button_image,
+                                        pos_x=button_pos_x,
+                                        pos_y=button_pos_y)
 
-                self.color = self.settings.button_color.get('red')
-
-                self.button.draw_button()
-
-        else:
-            self.button.draw_button()
+            else:
+                button_pos_x = algo + button.grid_start_x
+                button_pos_y = button.button_pos_y
+                self.button.draw_button(display=self.display,
+                                        scaled_image=scaled_button_image,
+                                        pos_x=button_pos_x,
+                                        pos_y=button_pos_y)
 
     def grid_event (self):
 
@@ -97,8 +121,8 @@ class Grid() :
 
         self.row =  (pos[1] - self.settings.grid_surface.get('grid_start_y')) // (self.settings.grid_surface.get('cell_hight') + self.settings.grid_surface.get('cell_margin'))
 
-       
-        try:  # Set that location to one
+        # Set that location to one
+        try:
             pass
     
             self.list_grid[self.row][self.column] = self.color_number
@@ -111,23 +135,4 @@ class Grid() :
 
         print("Click ", pos, "Grid coordinates: ", self.column,self.row)
 
-  
-
-                
-                
-            
-
-
-
-    
-
-     
-
-
-     
-     
-     
-     
-     
-    
 

@@ -1,8 +1,7 @@
 import sys
 import pygame
 
-
-class Settings :
+class Settings:
 
     def __init__(self) :
 
@@ -17,7 +16,7 @@ class Settings :
                          }
 
         self.grid_surface = { 
-            
+                                    
             'back_ground_color' : (0, 0 ,0), 
                           
             'width'             : 255,
@@ -39,7 +38,7 @@ class Settings :
         
         self.button = {
             
-            'image'        : pygame.image.load("fotos/rojo.png"),
+            'images_path'        : "fotos",
 
             'bright_image' : pygame.image.load("fotos/rojo_brillante.png"),
             
