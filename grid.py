@@ -81,7 +81,7 @@ class Grid() :
 
             if click[0] == True:
 
-                self.color = self.RED
+                self.color = self.settings.button_color.get('red')
 
                 self.button.draw_button()
 
@@ -97,8 +97,8 @@ class Grid() :
 
         self.row =  (pos[1] - self.settings.grid_surface.get('grid_start_y')) // (self.settings.grid_surface.get('cell_hight') + self.settings.grid_surface.get('cell_margin'))
 
-        # Set that location to one
-        try:
+       
+        try:  # Set that location to one
             pass
     
             self.list_grid[self.row][self.column] = self.color_number
