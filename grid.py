@@ -42,7 +42,7 @@ class Grid() :
                         self.settings.grid_surface.get('cell_width'),
                         self.settings.grid_surface.get('cell_hight')])
 
-    def draw_grid(self, button_images):
+    def draw_grid(self, button_images, hover_button_images):
 
         self.display = pygame.display.get_surface()
         
@@ -74,43 +74,46 @@ class Grid() :
                 self.display.blit(self.grid_surface_display, (self.settings.grid_surface.get('grid_start_x'), self.settings.grid_surface.get('grid_start_y')))
 
         #change color for selecting boxes TODO: FOR LOOP to create extra buttons goes here
-        images_path = self.settings.button.get("images_path")
-        algo = 0
+        x_distance_between_buttons = 0
 
-        for scaled_button_image in button_images:
-            # rojo_brillante.png
+        for scaled_button_image, scaled_hover_button_image in zip(button_images, hover_button_images):
             # rojo.png
+            # verde.png
+            # azul.png
 
+            # Create the Button Instance to draw on screen
             button = Button()
-            algo += button.x_scale + 5
-            if button.x_scale + button.grid_start_x + algo > pos[0] > button.grid_start_x + algo and button.y_scale + button.button_pos_y + button.y_margin > pos[1] > button.button_pos_y + button.y_margin:
-                button_pos_x = algo + button.grid_start_x
+            if button.x_scale + button.grid_start_x + x_distance_between_buttons > pos[0] > button.grid_start_x + x_distance_between_buttons \
+            and button.y_scale + button.button_pos_y + button.y_margin > pos[1] > button.button_pos_y + button.y_margin:
+        
+                button_pos_x = x_distance_between_buttons + button.grid_start_x
                 button_pos_y = button.button_pos_y
                 button.draw_bright_button(display=self.display,
-                                            scaled_image=scaled_button_image, 
+                                            scaled_image=scaled_hover_button_image, 
                                             pos_x=button_pos_x, 
                                             pos_y=button_pos_y)
-
             else:
-                pass
 
+                if click[0] == True:
+                    button_pos_x = x_distance_between_buttons + button.grid_start_x
+                    button_pos_y = button.button_pos_y
+                    self.color = self.settings.button_color.get("red")
+                    self.button.draw_button(display=self.display,
+                                            scaled_image=scaled_button_image,
+                                            pos_x=button_pos_x,
+                                            pos_y=button_pos_y)
 
-            if click[0] == True:
-                button_pos_x = algo + button.grid_start_x
-                button_pos_y = button.button_pos_y
-                self.color = self.settings.button_color.get("red")
-                self.button.draw_button(display=self.display,
-                                        scaled_image=scaled_button_image,
-                                        pos_x=button_pos_x,
-                                        pos_y=button_pos_y)
+                else:
+                    button_pos_x = x_distance_between_buttons + button.grid_start_x
+                    button_pos_y = button.button_pos_y
+                    self.button.draw_button(display=self.display,
+                                            scaled_image=scaled_button_image,
+                                            pos_x=button_pos_x,
+                                            pos_y=button_pos_y)
 
-            else:
-                button_pos_x = algo + button.grid_start_x
-                button_pos_y = button.button_pos_y
-                self.button.draw_button(display=self.display,
-                                        scaled_image=scaled_button_image,
-                                        pos_x=button_pos_x,
-                                        pos_y=button_pos_y)
+            # update the distance between buttons
+            x_distance_between_buttons += button.x_scale + 10
+
 
     def grid_event (self):
 

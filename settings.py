@@ -40,7 +40,7 @@ class Settings:
             
             'images_path'        : "fotos",
 
-            'bright_image' : pygame.image.load("fotos/rojo_brillante.png"),
+            'bright_image' : pygame.image.load("fotos/02rojo_brillante.png"),
             
             'x_scale'      : 18,
                        

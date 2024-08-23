@@ -25,16 +25,20 @@ class Arc_game():  # CLASS PRINCIPAL DEL JUEGO
         pygame.display.set_caption("Arc AGI game") # CREA UN NOMBRE PARA LA PANTALLA PRINCIPAL
 
         self.button_images = []
+        self.hover_button_images = []
         images_path = self.settings.button.get("images_path")
         for item in os.listdir(images_path):
             # rojo_brillante.png
             # rojo.png
-
+            item_parts = item.split("_")
             item_path = Path(images_path, item)
-            if os.path.isfile(item_path):
+
+            if len(item_parts) < 2 and os.path.isfile(item_path):
                 scaled_button_image = self.button.load_image(image_path=item_path)
                 self.button_images.append(scaled_button_image)
-    
+            else:
+                scaled_hover_button_image = self.button.load_image(image_path=item_path)
+                self.hover_button_images.append(scaled_hover_button_image)
 
     def check_events(self): # FUNCION PARA CHEQUEAR EVENTOS DE TECLADO O MOUSE
 
@@ -59,8 +63,9 @@ class Arc_game():  # CLASS PRINCIPAL DEL JUEGO
     def update_screen (self): 
      
         self.screen.fill(((self.settings.screen.get('bg_color')))) # LE DA EL COLOR DE FONDO A LA PANTALLA PRINCIPAL
-
-        self.grid.draw_grid(self.button_images)
+        print("b images:", self.button_images)
+        print("h b images:", self.hover_button_images)
+        self.grid.draw_grid(self.button_images, self.hover_button_images)
 
     def run_game(self) : # FUNCION DE LOOP PARA PARA IMPLEMENTAR TODO LOS COMPONENTES DEL JUEGO
 
@@ -76,8 +81,4 @@ if __name__ == '__main__' : # CONDICION QUE PONEMOS PARA USAR LA FUNCION .RUN_GA
     ai = Arc_game()
 
     ai.run_game()
-
-
-
-
 
