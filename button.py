@@ -4,7 +4,7 @@ from settings import Settings
 
 class Button ():
 
-    def __init__(self):
+    def __init__(self, color_number):
 
         self.settings = Settings()
 
@@ -14,7 +14,6 @@ class Button ():
 
         self.y_margin = self.settings.button.get('button_margin')
 
-
         self.grid_start_x = self.settings.grid_surface.get('grid_start_x')
 
         self.button_pos_y = self.settings.grid_surface.get('grid_start_y') + self.settings.grid_surface.get('hight') + self.settings.button.get('button_margin')
@@ -22,6 +21,8 @@ class Button ():
         self.button_pos_x = self.settings.grid_surface.get('grid_start_x')
 
         self.display = pygame.display.get_surface() # devuelve la superfice que creamos 
+
+        self.color_number = color_number
 
 
     def load_image(self, image_path):
