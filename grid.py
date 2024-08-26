@@ -16,8 +16,6 @@ class Grid() :
 
         self.current_list_grid = []  # EMPTY LIST WHERE WE WILL STORE AN ARRAY OF LISTS
 
-        self.previous_list_grid = []
-
         # Create a 2 dimensional array. A two dimensional array is simply a list of lists.
         for row in range(10):
             self.current_list_grid.append([]) # Add an empty array that will hold each cell in this row
@@ -25,9 +23,8 @@ class Grid() :
                 self.current_list_grid[row].append(0) # Append a cell
 
 
-    def render_box_color(self, color_number, row, column):
+    def render_cell_color(self, color_number, row, column):
 
-        print("render box color: ", color_number, row, column)
         pygame.draw.rect(self.grid_surface_display,
                         self.settings.button_color[color_number],
                         [(self.settings.grid_surface.get('cell_margin') + self.settings.grid_surface.get('cell_width')) * column + self.settings.grid_surface.get('cell_margin'),
@@ -35,14 +32,6 @@ class Grid() :
                         self.settings.grid_surface.get('cell_width'),
                         self.settings.grid_surface.get('cell_hight')])
 
-        # # RENDER RED BOXES
-        # elif self.list_grid[row][column] == 2:
-        #     pygame.draw.rect(self.grid_surface_display,
-        #                 self.settings.button_color.get('red'),
-        #                 [(self.settings.grid_surface.get('cell_margin') + self.settings.grid_surface.get('cell_width')) * column + self.settings.grid_surface.get('cell_margin'),
-        #                 (self.settings.grid_surface.get('cell_margin') + self.settings.grid_surface.get('cell_hight')) * row + self.settings.grid_surface.get('cell_margin'),
-        #                 self.settings.grid_surface.get('cell_width'),
-        #                 self.settings.grid_surface.get('cell_hight')])
 
     def render_buttons(self, button_images, hover_button_images, mouse_pos):
         x_distance_between_buttons = 0
@@ -106,7 +95,7 @@ class Grid() :
 
         for row_number, row in enumerate(self.current_list_grid):
             for column_number, cell_color in enumerate(row):
-                self.render_box_color(cell_color, row_number, column_number)
+                self.render_cell_color(cell_color, row_number, column_number)
                 self.display.blit(self.grid_surface_display, (self.settings.grid_surface.get('grid_start_x'), self.settings.grid_surface.get('grid_start_y')))
 
         # #change color for selecting boxes TODO: FOR LOOP to create extra buttons goes here
@@ -116,9 +105,7 @@ class Grid() :
                             mouse_pos=pos)
 
         # Potential bug - Code runs many times with 1 click
-        for event in pygame.event.get(): 
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                self.handle_color_change(button_images=button_images,
+        self.handle_color_change(button_images=button_images,
                                 hover_button_images=hover_button_images,
                                 mouse_pos=pos)
         
