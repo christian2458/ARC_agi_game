@@ -62,6 +62,7 @@ class Grid() :
             # update the distance between buttons
             x_distance_between_buttons += button.x_scale + 10
 
+
     def handle_color_change(self, button_images, hover_button_images, mouse_pos):
         x_distance_between_buttons = 0
         for idx, (scaled_button_image, scaled_hover_button_image) in enumerate(zip(button_images, hover_button_images)):
@@ -109,7 +110,6 @@ class Grid() :
                                 hover_button_images=hover_button_images,
                                 mouse_pos=pos)
         
-
 
     def grid_update(self):
 

@@ -47,24 +47,3 @@ class Button ():
         display.blit(scaled_image,(pos_x, pos_y))
 
 
-    def button_event(self):
-
-        pos = pygame.mouse.get_pos()
-
-        if self.x_scale + self.grid_start_x > pos[0] > self.grid_start_x and self.y_scale + self.display_y + self.y_margin > pos[1] > self.display_y + self.y_margin :
-
-            self.draw_bright_button()
-
-        else:
-         
-            self.draw_button(display=self.display,
-                            scaled_image="",
-                            pos_x="",
-                            pos_y="") 
-
-   
-
-
-
-            
-  
