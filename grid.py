@@ -3,10 +3,12 @@ import pygame
 from settings import Settings
 from button import Button
 from pathlib import Path
+import json
+
 
 class Grid() :
 
-    def __init__(self):
+    def __init__(self, example_grid):
 
         self.settings = Settings()
 
@@ -15,13 +17,11 @@ class Grid() :
         self.current_color = 0
 
         self.current_list_grid = []  # EMPTY LIST WHERE WE WILL STORE AN ARRAY OF LISTS
-
-        # Create a 2 dimensional array. A two dimensional array is simply a list of lists.
-        for row in range(10):
+        
+        for row_num, row in enumerate(example_grid):
             self.current_list_grid.append([]) # Add an empty array that will hold each cell in this row
-            for column in range(10):
-                self.current_list_grid[row].append(0) # Append a cell
-
+            for col_num, color_value in enumerate(row):
+                self.current_list_grid[row_num].append(color_value)
 
     def render_cell_color(self, color_number, row, column):
 
@@ -87,7 +87,9 @@ class Grid() :
         self.grid_surface_display = pygame.Surface((self.settings.grid_surface.get('width'),self.settings.grid_surface.get('hight')))
 
         self.grid_surface_display.fill(self.settings.grid_surface.get('back_ground_color'))
+        # Create a 2 dimensional array. A two dimensional array is simply a list of lists.
 
+        # Append a cell
         click = pygame.mouse.get_pressed()
         # (False, False, False)
 
@@ -128,5 +130,4 @@ class Grid() :
             pass
 
         print("Click ", pos, "Grid coordinates: ", self.column,self.row)
-
 
