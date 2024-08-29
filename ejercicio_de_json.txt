@@ -1,0 +1,17 @@
+crear un python script que pueda leer el json: "data_from_servers.json"
+
+usando python, determinar la siguiente informacion del documento JSON:
+
+1. Cuantos Employees hay en total?
+2. La paga total de Tito
+3. La paga total de Kevin + Cassie
+4. Cuantos comentarios totales hicieron los usuarios?
+
+
+para leer un documento de JSON, se puede utilizar este siguiente tipo de code:
+
+with open("filename", "r") as f:
+    my_data = json.load(f)
+
+
+(El code no esta completo - van a tener que hacer sus propios ajustes)
