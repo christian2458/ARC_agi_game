@@ -5,15 +5,15 @@ from pathlib import Path
 from grid import Grid # DEL ARCHIVO GRID IMPORTA LA CLASS Grid
 from data_handling import GridDataLoader
 from settings import   Settings # DEL ARCHIVO SETTINGS IMPORTA LA CLASS Settings
-
+from button_manager import ButtonManager
 from button import Button
 
-class Arc_game(): 
+class Arc_game():
 
     def __init__(self): 
 
         pygame.init() # INICIA LO NECESARIO PARA EL JUEGO (ES NECESARIO EN CADA NUEVO JUEGO)
-
+        
         self.train_grids = {"input": [],
                             "output": []}
         self.test_grids = {"input": [],
@@ -42,6 +42,11 @@ class Arc_game():
         self.initialize_train_grids(train_input=train_in_g, train_output=train_out_g)
         self.initialize_test_grids(test_input=test_in_g, test_output=test_out_g)
 
+        self.display = pygame.display.get_surface()
+
+        self.button_manager = ButtonManager(display=self.display,
+                                          button_images=self.button_images,
+                                          hover_button_images=self.hover_button_images)
 
     def load_button_images(self, images_path):
         # Load images for buttons from images_path
@@ -83,27 +88,27 @@ class Arc_game():
         self.l_test_input_grid = Grid(self.test_grids["input"], (90, grid_pos_y))   
         self.r_test_output_grid = Grid(self.test_grids["output"], (90 + grid_pos_x, grid_pos_y))
 
-    
 
     def check_events(self): # FUNCION PARA CHEQUEAR EVENTOS DE TECLADO O MOUSE
         pygame.display.update()
         for event in pygame.event.get(): 
-            pos = pygame.mouse.get_pos()
 
             if event.type == pygame.QUIT:
                 sys.exit()
             
             if event.type == pygame.MOUSEBUTTONDOWN:
-                
-                self.r_test_output_grid.grid_update()
+                pos = pygame.mouse.get_pos()
+                self.current_color = self.button_manager.handle_color_change(mouse_pos=pos)
+                self.r_test_output_grid.grid_update(current_color=self.current_color)
 
   
     def update_screen (self): 
         self.screen.fill(((self.settings.screen.get('bg_color')))) # LE DA EL COLOR DE FONDO A LA PANTALLA PRINCIPAL
-        self.l_train_input_grid.draw_grid(self.button_images, self.hover_button_images)
-        self.r_train_output_grid.draw_grid(self.button_images, self.hover_button_images)
-        self.l_test_input_grid.draw_grid(self.button_images, self.hover_button_images)
-        self.r_test_output_grid.draw_grid(self.button_images, self.hover_button_images)
+        self.l_train_input_grid.draw_grid()
+        self.r_train_output_grid.draw_grid()
+        self.l_test_input_grid.draw_grid()
+        self.r_test_output_grid.draw_grid()
+        self.button_manager.render_buttons(mouse_pos=pygame.mouse.get_pos())
 
 
     def run_game(self) : # FUNCION DE LOOP PARA PARA IMPLEMENTAR TODO LOS COMPONENTES DEL JUEGO
