@@ -1,0 +1,22 @@
+{
+    "Comments": {
+        "Kevin": ["hola men", "ah ok", "roger that"],
+        "Tito": ["que mas", "no se", "ya simon", "rogelio"],
+        "Luis": ["yo", "ido ido", "roger that", "hola", "no vemos pronto", "mi casa"]
+    },
+    "Employees": ["Kevin",
+              "Tito",
+              "Luis", 
+              "Pablo", 
+              "Brian",
+              "Cassie", 
+              "Charles", 
+              "Damien"
+            ],
+    "Job Titles": {
+        "Lead Engineer": [{"Luis": "$500,000"}],
+        "Senior Engineer": [{"Tito": "$300,000"}, {"Kevin": "$300,000"}],
+        "Junior Engineer": [{"Damien": "$100,000"}, {"Cassie": "$100,000"}],
+        "Audio Engineer": [{"Pablo": "$450,000"}, {"Brian": "$200,000"}]
+    }
+}
