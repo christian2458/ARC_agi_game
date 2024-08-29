@@ -14,9 +14,9 @@ class Settings:
         self.grid_surface = {                     
             'back_ground_color' : (175, 175 , 175),           
             'width'             : 255,     
-            'hight'             : 255,
+            'height'             : 255,
             'cell_width'        : 20,
-            'cell_hight'        : 20, 
+            'cell_height'        : 20, 
             'cell_margin'       : 5, 
             'grid_start_x'      : 90,
             'grid_start_y'      : 90,

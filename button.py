@@ -16,7 +16,7 @@ class Button ():
 
         self.grid_start_x = self.settings.grid_surface.get('grid_start_x')
 
-        self.button_pos_y = self.settings.grid_surface.get('grid_start_y') + self.settings.grid_surface.get('hight') + self.settings.button.get('button_margin')
+        self.button_pos_y = self.settings.grid_surface.get('grid_start_y') + self.settings.grid_surface.get('height') + self.settings.button.get('button_margin')
 
         self.button_pos_x = self.settings.grid_surface.get('grid_start_x')
 
