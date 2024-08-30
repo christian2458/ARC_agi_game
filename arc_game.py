@@ -29,6 +29,8 @@ class Arc_game():
 
         self.button = Button(color_number=0)  
 
+        self.start_buttons_x_pos = self.button.grid_start_x + 2.2*self.settings.grid_surface.get("width")
+        self.start_buttons_y_pos = self.button.button_pos_y
         # CREA UNA SUPERFICIE PARA DISPLAY QUE ES LA PANTALLA PRINCIPAL SACANDO DE UN DICTIONARY
         self.screen = pygame.display.set_mode((self.settings.screen.get('screen_with'),
                                                self.settings.screen.get('screen_height')))  
@@ -47,6 +49,7 @@ class Arc_game():
         self.button_manager = ButtonManager(display=self.display,
                                           button_images=self.button_images,
                                           hover_button_images=self.hover_button_images)
+
 
     def load_button_images(self, images_path):
         # Load images for buttons from images_path
@@ -98,7 +101,11 @@ class Arc_game():
             
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
-                self.current_color = self.button_manager.handle_color_change(mouse_pos=pos)
+                
+                self.current_color = self.button_manager.handle_color_change(mouse_pos=pos,
+                                                                             start_pos_x=self.start_buttons_x_pos,
+                                                                             pos_y=self.start_buttons_y_pos)
+                
                 self.r_test_output_grid.grid_update(current_color=self.current_color)
 
   
@@ -108,7 +115,10 @@ class Arc_game():
         self.r_train_output_grid.draw_grid()
         self.l_test_input_grid.draw_grid()
         self.r_test_output_grid.draw_grid()
-        self.button_manager.render_buttons(mouse_pos=pygame.mouse.get_pos())
+
+        self.button_manager.render_buttons(mouse_pos=pygame.mouse.get_pos(),
+                                           start_pos_x=self.start_buttons_x_pos,
+                                           pos_y=self.start_buttons_y_pos)
 
 
     def run_game(self) : # FUNCION DE LOOP PARA PARA IMPLEMENTAR TODO LOS COMPONENTES DEL JUEGO
