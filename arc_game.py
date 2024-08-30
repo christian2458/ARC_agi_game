@@ -105,7 +105,7 @@ class Arc_game():
                 self.current_color = self.button_manager.handle_color_change(mouse_pos=pos,
                                                                              start_pos_x=self.start_buttons_x_pos,
                                                                              pos_y=self.start_buttons_y_pos)
-                
+
                 self.r_test_output_grid.grid_update(current_color=self.current_color)
 
   
