@@ -53,3 +53,5 @@ class Settings:
             'white': (255, 255, 255)
                          }
 
+# (width - cell_margin)/num_columns - cell_margin   ==> cell_width
+# (width - cell_margin)/num_rows - cell_margin   ==> cell_height

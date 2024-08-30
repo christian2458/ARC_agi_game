@@ -2,3 +2,4 @@ env
 .vscode
 imgs
 __pycache__/
+grid_data

@@ -7,9 +7,15 @@ import json
 
 class Grid() :
 
-    def __init__(self, grid_data, grid_position):
+    def __init__(self, grid_data, grid_position,cell_width,cell_height,cell_margin):
 
         self.settings = Settings()
+
+        self.cell_width = cell_width
+
+        self.cell_height = cell_height
+
+        self.cell_margin = cell_margin
 
         self.default_color_number = 0
 
@@ -29,16 +35,18 @@ class Grid() :
 
         pygame.draw.rect(self.grid_surface_display,
                         self.settings.button_color[color_number],
-                        [(self.settings.grid_surface.get('cell_margin') + self.settings.grid_surface.get('cell_width')) * column + self.settings.grid_surface.get('cell_margin'),
-                        (self.settings.grid_surface.get('cell_margin') + self.settings.grid_surface.get('cell_height')) * row + self.settings.grid_surface.get('cell_margin'),
-                        self.settings.grid_surface.get('cell_width'),
-                        self.settings.grid_surface.get('cell_height')])
+                        [(self.cell_margin + self.cell_width) * column + self.cell_margin,
+                        (self.cell_margin + self.cell_height) * row + self.cell_margin,
+                        self.cell_width,
+                        self.cell_height])
+        
+        
 
 
     def draw_grid(self):
 
         self.display = pygame.display.get_surface()
-        
+        # setting grid width and height
         self.grid_surface_display = pygame.Surface((self.settings.grid_surface.get('width'),
                                                     self.settings.grid_surface.get('height')))
 
@@ -58,6 +66,7 @@ class Grid() :
         if self.grid_position[0] < pos[0] < self.grid_position[0] + self.settings.grid_surface.get("width") and \
             self.grid_position[1] < pos[1] < self.grid_position[1] + self.settings.grid_surface.get("height"):
 
+            # Transform mouse position to Grid Position
             self.column =  (pos[0] - self.grid_position[0]) // (self.settings.grid_surface.get('cell_width') + self.settings.grid_surface.get('cell_margin'))
             self.row =  (pos[1] - self.grid_position[1]) // (self.settings.grid_surface.get('cell_height') + self.settings.grid_surface.get('cell_margin'))
             print("trying to update cell color")

@@ -7,6 +7,7 @@ from data_handling import GridDataLoader
 from settings import   Settings # DEL ARCHIVO SETTINGS IMPORTA LA CLASS Settings
 from button_manager import ButtonManager
 from button import Button
+from grid_manager import GridManager
 
 class Arc_game():
 
@@ -20,7 +21,7 @@ class Arc_game():
                            "output": []}
         
         self.current_train_grid_pair = 0
-        
+        self.grid_data_path = "grid_data/00d62c1b.json"
         self.button_images = []
         self.hover_button_images = []
         images_path = "fotos"
@@ -38,7 +39,23 @@ class Arc_game():
         pygame.display.set_caption("Arc AGI game") # CREA UN NOMBRE PARA LA PANTALLA PRINCIPAL
 
         g_data_loader = GridDataLoader()
-        train_in_g, train_out_g,test_in_g, test_out_g = g_data_loader.load_json_data(grid_data_path="grid_data/00d62c1b.json")
+        train_in_g, train_out_g,test_in_g, test_out_g = g_data_loader.load_json_data(grid_data_path=self.grid_data_path)
+
+        print("rows",len(train_in_g[0]))
+
+        print("colum",len(train_in_g[0][0]))
+
+
+
+        self.grid_manager = GridManager(grid_data_path=self.grid_data_path, settings=self.settings)
+
+        train_grid_sizes = self.grid_manager.load_grid_sizes(train_input=train_in_g)
+        
+        self.cell_width = train_grid_sizes[0][0]
+        self.cell_height = train_grid_sizes[0][1]
+
+        self.cell_margin = self.settings.grid_surface.get('cell_margin')
+        
 
         self.load_button_images(images_path=images_path)
         self.initialize_train_grids(train_input=train_in_g, train_output=train_out_g)
@@ -76,8 +93,8 @@ class Arc_game():
         
         train_initial_input = self.train_grids["input"][self.current_train_grid_pair]
         train_initial_output = self.train_grids["output"][self.current_train_grid_pair]
-        self.l_train_input_grid = Grid(train_initial_input, (90, 90))   
-        self.r_train_output_grid = Grid(train_initial_output, (self.settings.grid_surface.get("width") + 10, 90))
+        self.l_train_input_grid = Grid(train_initial_input, (90, 90),self.cell_width,self.cell_height,self.cell_margin)   
+        # self.r_train_output_grid = Grid(train_initial_output, (self.settings.grid_surface.get("width") + 10, 90))
 
 
     def initialize_test_grids(self, test_input, test_output):
@@ -88,8 +105,8 @@ class Arc_game():
         grid_pos_x = self.settings.grid_surface.get("width") + 10
         grid_pos_y = self.settings.grid_surface.get("height") + 100
         
-        self.l_test_input_grid = Grid(self.test_grids["input"], (90, grid_pos_y))   
-        self.r_test_output_grid = Grid(self.test_grids["output"], (90 + grid_pos_x, grid_pos_y))
+        # self.l_test_input_grid = Grid(self.test_grids["input"], (90, grid_pos_y))   
+        # self.r_test_output_grid = Grid(self.test_grids["output"], (90 + grid_pos_x, grid_pos_y))
 
 
     def check_events(self): # FUNCION PARA CHEQUEAR EVENTOS DE TECLADO O MOUSE
@@ -112,9 +129,9 @@ class Arc_game():
     def update_screen (self): 
         self.screen.fill(((self.settings.screen.get('bg_color')))) # LE DA EL COLOR DE FONDO A LA PANTALLA PRINCIPAL
         self.l_train_input_grid.draw_grid()
-        self.r_train_output_grid.draw_grid()
-        self.l_test_input_grid.draw_grid()
-        self.r_test_output_grid.draw_grid()
+        # self.r_train_output_grid.draw_grid()
+        # self.l_test_input_grid.draw_grid()
+        # self.r_test_output_grid.draw_grid()
 
         self.button_manager.render_buttons(mouse_pos=pygame.mouse.get_pos(),
                                            start_pos_x=self.start_buttons_x_pos,
